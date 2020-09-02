@@ -33,10 +33,6 @@ import re
 from locale import gettext as _
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
-try:
-    from urllib.request import Request, urlopen  # Python 3
-except ImportError:
-    from urllib2 import Request, urlopen         # Python 2
 import feedparser
 from random import randrange
 

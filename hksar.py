@@ -96,7 +96,7 @@ class HKSARSource(IQuoteSource):
                     "link": a.link})
 
         if not self.quotes:
-            logger.warning("Could not find quotes for URL " + vdm_url)
+            logger.warning("Could not find quotes for URL " + select_url)
 
     def get_for_author(self, author):
         return []

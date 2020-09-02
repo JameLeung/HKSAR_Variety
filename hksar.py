@@ -41,8 +41,7 @@ logger = logging.getLogger("variety")
 class HKSARSource(IQuoteSource):
     """
         Retrieves quotes from hong kong websites. Reads the last quotes.
-        Attributes:
-            quotes(list): list containing the quotes
+        Attributes: quotes(list): list containing the quotes
     """
 
     def __init__(self):
@@ -54,8 +53,7 @@ class HKSARSource(IQuoteSource):
     def get_info(cls):
         return {
             "name": "Jame Leung - HKSAR web sites news ",
-            "description": _("Real Time News from Hongkong RSS feed\n"
-                             "DIY in COVID19 stage"),
+            "description": _("Real Time News from Hongkong RSS feed\nDIY in COVID19 stage"),
             "author": "Jame Leung",
             "url": "https://github.com/JameLeung/HKSAR_Variety",
             "version": "0.0.1"
@@ -73,22 +71,23 @@ class HKSARSource(IQuoteSource):
 
     def deactivate(self):
         self.quotes = []
-	self.active = False
+        self.active = False
 
     def is_active(self):
-	return self.active
+        return self.active
 
     def fetch_hksar_news(self):
-	hksar_url=["https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml","https://rthk.hk/rthk/news/rss/c_expressnews_cgreaterchina.xml","https://rthk.hk/rthk/news/rss/c_expressnews_cinternational.xml","https://rthk.hk/rthk/news/rss/c_expressnews_cfinance.xml","https://rthk.hk/rthk/news/rss/c_expressnews_csport.xml","http://news.on.cc/ncnews/rss/loc_news.xml","https://www.inmediahk.net/rss.xml","https://www.thestandnews.com/rss/","https://news.mingpao.com/rss/pns/s00001.xml","http://rss.appleactionews.com/rss.xml"]
+        hksar_url=["https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml","https://rthk.hk/rthk/news/rss/c_expressnews_cgreaterchina.xml","https://rthk.hk/rthk/news/rss/c_expressnews_cinternational.xml","https://rthk.hk/rthk/news/rss/c_expressnews_cfinance.xml","https://rthk.hk/rthk/news/rss/c_expressnews_csport.xml","http://news.on.cc/ncnews/rss/loc_news.xml","https://www.inmediahk.net/rss.xml","https://www.thestandnews.com/rss/","https://news.mingpao.com/rss/pns/s00001.xml","http://rss.appleactionews.com/rss.xml"]
+        d = feedparser.parse(hksar_url[randrange(len(hksar_url))])
 
-	d = feedparser.parse(hksar_url[randrange(len(hksar_url))])
+        self.quotes = []
 
-	self.quotes = []
+        for a in d.entries:
 
-	for a in d.entries:
-		author = d.feed.title.replace(" ","") + " " + str(format(a.published_parsed.tm_hour,"02d")) + ":" + str(format(a.published_parsed.tm_min,"02d"))
-                self.quotes.append({
-                    "quote": a.title.replace(" ","")
+            author = d.feed.title.replace(" ","") + " " + str(format(a.published_parsed.tm_hour,"02d")) + ":" + str(format(a.published_parsed.tm_min,"02d"))
+		
+            self.quotes.append({
+                    "quote": a.title.replace(" ",""),
                     "author": author,
                     "sourceName": "HKSAR",
                     "link": a.link})

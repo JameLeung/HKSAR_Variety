@@ -37,7 +37,8 @@ try:
     from urllib.request import Request, urlopen  # Python 3
 except ImportError:
     from urllib2 import Request, urlopen         # Python 2
-from bs4 import BeautifulSoup
+import feedparser
+from random import randrange
 
 logger = logging.getLogger("variety")
 
